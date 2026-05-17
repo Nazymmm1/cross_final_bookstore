@@ -12,7 +12,7 @@ Demonstrates Clean Architecture, state management, local/cloud persistence, and 
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Flutter SDK `>=3.0.0`
