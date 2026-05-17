@@ -23,9 +23,16 @@ dependencies:
   # Local storage (web-compatible)
   shared_preferences: ^2.2.2
 
+  # Local Database (Drift)
+  drift: ^2.14.0
+  sqlite3_flutter_libs: ^0.5.0
+  path_provider: ^2.1.0
+  path: ^1.8.0
+
   # Firebase
-  firebase_core: ^2.27.0
-  cloud_firestore: ^4.15.0
+  firebase_core: ^3.6.0
+  firebase_auth: ^5.3.0
+  cloud_firestore: ^5.4.0
 
   # Utils
   freezed_annotation: ^2.4.1
@@ -35,8 +42,13 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  
+  # Code generators
   build_runner: ^2.4.8
+  drift_dev: ^2.14.0
   freezed: ^2.4.7
   json_serializable: ^6.7.1
   riverpod_generator: ^2.3.9
-  
+
+flutter:
+  uses-material-design: true

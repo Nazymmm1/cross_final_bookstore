@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "578807629061",
+    "project_id": "final-cloud-c5ace",
+    "storage_bucket": "final-cloud-c5ace.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578807629061:android:b08a076bef87356e88a36c",
+        "android_client_info": {
+          "package_name": "com.nazym.book_store"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtXGrNnEXFZ7pH8wgPRk3pozsj6yvzHVI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

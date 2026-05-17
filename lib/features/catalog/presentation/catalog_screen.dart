@@ -16,7 +16,7 @@ class CatalogScreen extends ConsumerWidget {
     final cartCount = ref.watch(cartItemCountProvider);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F5FF),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -35,7 +35,7 @@ class CatalogScreen extends ConsumerWidget {
               Stack(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
+                    icon:  Icon(Icons.shopping_cart_outlined, color: Theme.of(context).colorScheme.surfaceContainerLowest,),
                     onPressed: () => context.go('/cart'),
                   ),
                   if (cartCount > 0)
@@ -50,14 +50,14 @@ class CatalogScreen extends ConsumerWidget {
                         ),
                         child: Text(
                           '$cartCount',
-                          style: const TextStyle(color: Colors.white, fontSize: 10),
+                          style:  TextStyle(color: Theme.of(context).colorScheme.surfaceContainerLowest, fontSize: 10),
                         ),
                       ),
                     ),
                 ],
               ),
               IconButton(
-                icon: const Icon(Icons.person_outline, color: Colors.white),
+                icon:  Icon(Icons.person_outline, color: Theme.of(context).colorScheme.surfaceContainerLowest,),
                 onPressed: () => context.go('/profile'),
               ),
             ],
@@ -87,9 +87,9 @@ class CatalogScreen extends ConsumerWidget {
                     label: Text(genre),
                     selected: isSelected,
                     selectedColor: const Color(0xFF6B4EFF),
-                    backgroundColor: Colors.white,
+                    backgroundColor: Theme.of(context).colorScheme.surfaceContainerLowest,
                     labelStyle: TextStyle(
-                      color: isSelected ? Colors.white : const Color(0xFF6B4EFF),
+                      color: isSelected ? Theme.of(context).colorScheme.surfaceContainerLowest : const Color(0xFF6B4EFF),
                       fontWeight: FontWeight.w500,
                     ),
                     onSelected: (_) {
@@ -180,10 +180,10 @@ class _BookCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
-      onTap: () => context.go('/book/${book.id}'),
+      onTap: () => context.push('/book/${book.id}'),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surfaceContainerLowest,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -264,7 +264,7 @@ class _BookCard extends ConsumerWidget {
                               color: Color(0xFF6B4EFF),
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(Icons.add, color: Colors.white, size: 14),
+                            child: Icon(Icons.add, color: Theme.of(context).colorScheme.surfaceContainerLowest, size: 14),
                           ),
                         ),
                       ],

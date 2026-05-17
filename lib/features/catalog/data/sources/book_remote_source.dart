@@ -53,7 +53,10 @@ class BookRemoteSource {
         }
       }
     } catch (_) {}
-    // fallback to mock
+    // fallback — return all mock books if query is featured/empty
+    if (query.contains('bestseller') || query.isEmpty) {
+      return _mockBooks;
+    }
     final q = query.toLowerCase();
     return _mockBooks.where((b) =>
       b.title.toLowerCase().contains(q) ||
