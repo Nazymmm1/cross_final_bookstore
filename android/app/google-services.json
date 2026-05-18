@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "262089540820",
+    "project_id": "bookstore-app-223a1",
+    "storage_bucket": "bookstore-app-223a1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262089540820:android:2f8fa93c06acbb12d52741",
+        "android_client_info": {
+          "package_name": "com.nazym.book_store"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwGbWD1L6_jqB8_q1WRodgwimTSyXTs5s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
