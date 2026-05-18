@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:bookstore_app/features/catalog/presentation/providers/catalog_provider.dart';
 import 'package:bookstore_app/features/catalog/domain/entities/book.dart';
 import 'package:bookstore_app/features/cart/presentation/providers/cart_provider.dart';
+import 'package:bookstore_app/features/profile/presentation/providers/wishlist_provider.dart';
 
 class CatalogScreen extends ConsumerWidget {
   const CatalogScreen({super.key});
@@ -16,7 +17,7 @@ class CatalogScreen extends ConsumerWidget {
     final cartCount = ref.watch(cartItemCountProvider);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      backgroundColor: const Color(0xFFF8F5FF),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -25,45 +26,35 @@ class CatalogScreen extends ConsumerWidget {
             pinned: true,
             backgroundColor: const Color(0xFF6B4EFF),
             flexibleSpace: FlexibleSpaceBar(
-              title: const Text(
-                'Bookstore',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
+              title: const Text('Bookstore',
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
               background: Container(color: const Color(0xFF6B4EFF)),
             ),
             actions: [
               Stack(
                 children: [
                   IconButton(
-                    icon:  Icon(Icons.shopping_cart_outlined, color: Theme.of(context).colorScheme.surfaceContainerLowest,),
+                    icon: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
                     onPressed: () => context.go('/cart'),
                   ),
                   if (cartCount > 0)
                     Positioned(
-                      right: 6,
-                      top: 6,
+                      right: 6, top: 6,
                       child: Container(
                         padding: const EdgeInsets.all(4),
-                        decoration: const BoxDecoration(
-                          color: Colors.orange,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Text(
-                          '$cartCount',
-                          style:  TextStyle(color: Theme.of(context).colorScheme.surfaceContainerLowest, fontSize: 10),
-                        ),
+                        decoration: const BoxDecoration(color: Colors.orange, shape: BoxShape.circle),
+                        child: Text('$cartCount', style: const TextStyle(color: Colors.white, fontSize: 10)),
                       ),
                     ),
                 ],
               ),
               IconButton(
-                icon:  Icon(Icons.person_outline, color: Theme.of(context).colorScheme.surfaceContainerLowest,),
+                icon: const Icon(Icons.person_outline, color: Colors.white),
                 onPressed: () => context.go('/profile'),
               ),
             ],
           ),
 
-          // Search bar
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
@@ -71,7 +62,6 @@ class CatalogScreen extends ConsumerWidget {
             ),
           ),
 
-          // Genre chips
           SliverToBoxAdapter(
             child: SizedBox(
               height: 52,
@@ -87,14 +77,12 @@ class CatalogScreen extends ConsumerWidget {
                     label: Text(genre),
                     selected: isSelected,
                     selectedColor: const Color(0xFF6B4EFF),
-                    backgroundColor: Theme.of(context).colorScheme.surfaceContainerLowest,
+                    backgroundColor: Colors.white,
                     labelStyle: TextStyle(
-                      color: isSelected ? Theme.of(context).colorScheme.surfaceContainerLowest : const Color(0xFF6B4EFF),
+                      color: isSelected ? Colors.white : const Color(0xFF6B4EFF),
                       fontWeight: FontWeight.w500,
                     ),
-                    onSelected: (_) {
-                      ref.read(selectedGenreProvider.notifier).state = genre;
-                    },
+                    onSelected: (_) => ref.read(selectedGenreProvider.notifier).state = genre,
                   );
                 },
               ),
@@ -103,12 +91,9 @@ class CatalogScreen extends ConsumerWidget {
 
           const SliverToBoxAdapter(child: SizedBox(height: 8)),
 
-          // Books grid
           books.when(
             loading: () => const SliverFillRemaining(
-              child: Center(
-                child: CircularProgressIndicator(color: Color(0xFF6B4EFF)),
-              ),
+              child: Center(child: CircularProgressIndicator(color: Color(0xFF6B4EFF))),
             ),
             error: (e, _) => SliverFillRemaining(
               child: Center(
@@ -123,9 +108,7 @@ class CatalogScreen extends ConsumerWidget {
               ),
             ),
             data: (bookList) => bookList.isEmpty
-                ? const SliverFillRemaining(
-                    child: Center(child: Text('No books found')),
-                  )
+                ? const SliverFillRemaining(child: Center(child: Text('No books found')))
                 : SliverPadding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     sliver: SliverGrid(
@@ -134,13 +117,12 @@ class CatalogScreen extends ConsumerWidget {
                         childCount: bookList.length,
                       ),
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 12,
-                            childAspectRatio: 0.75,
-                            mainAxisExtent: 280,
-                          ),
-                                              ),
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        mainAxisExtent: 280,
+                      ),
+                    ),
                   ),
           ),
 
@@ -166,9 +148,7 @@ class _SearchBar extends ConsumerWidget {
           borderSide: BorderSide.none,
         ),
       ),
-      onChanged: (value) {
-        ref.read(searchQueryProvider.notifier).state = value;
-      },
+      onChanged: (value) => ref.read(searchQueryProvider.notifier).state = value,
     );
   }
 }
@@ -179,19 +159,15 @@ class _BookCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isWishlisted = ref.watch(wishlistProvider).any((b) => b.id == book.id);
+
     return GestureDetector(
-      onTap: () => context.push('/book/${book.id}'),
+      onTap: () => context.go('/book/${book.id}'),
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surfaceContainerLowest,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.06),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.06), blurRadius: 8, offset: const Offset(0, 2))],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,14 +177,8 @@ class _BookCard extends ConsumerWidget {
               child: ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
                 child: book.coverUrl.isNotEmpty
-                    ? Image.network(
-                        book.coverUrl,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => _PlaceholderCover(
-                          title: book.title,
-                        ),
-                      )
+                    ? Image.network(book.coverUrl, width: double.infinity, fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => _PlaceholderCover(title: book.title))
                     : _PlaceholderCover(title: book.title),
               ),
             ),
@@ -219,53 +189,43 @@ class _BookCard extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      book.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13,
-                      ),
-                    ),
+                    Text(book.title, maxLines: 2, overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
                     const SizedBox(height: 2),
-                    Text(
-                      book.author,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 11, color: Colors.grey[600]),
-                    ),
+                    Text(book.author, maxLines: 1, overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 11, color: Colors.grey[600])),
                     const Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          '\$${book.price.toStringAsFixed(0)}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF6B4EFF),
-                            fontSize: 14,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            ref.read(cartProvider.notifier).addBook(book);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('${book.title} added to cart'),
-                                duration: const Duration(seconds: 1),
-                                backgroundColor: const Color(0xFF6B4EFF),
+                        Text('\$${book.price.toStringAsFixed(0)}',
+                            style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF6B4EFF), fontSize: 14)),
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () => ref.read(wishlistProvider.notifier).toggleWishlist(book),
+                              child: Icon(
+                                isWishlisted ? Icons.favorite : Icons.favorite_border,
+                                color: Colors.red, size: 18,
                               ),
-                            );
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(6),
-                            decoration: const BoxDecoration(
-                              color: Color(0xFF6B4EFF),
-                              shape: BoxShape.circle,
                             ),
-                            child: Icon(Icons.add, color: Theme.of(context).colorScheme.surfaceContainerLowest, size: 14),
-                          ),
+                            const SizedBox(width: 6),
+                            GestureDetector(
+                              onTap: () {
+                                ref.read(cartProvider.notifier).addBook(book);
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: Text('${book.title} added to cart'),
+                                  duration: const Duration(seconds: 1),
+                                  backgroundColor: const Color(0xFF6B4EFF),
+                                ));
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(6),
+                                decoration: const BoxDecoration(color: Color(0xFF6B4EFF), shape: BoxShape.circle),
+                                child: const Icon(Icons.add, color: Colors.white, size: 14),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -286,12 +246,9 @@ class _PlaceholderCover extends StatelessWidget {
 
   Color _colorFromTitle(String title) {
     final colors = [
-      const Color(0xFF6B4EFF),
-      const Color(0xFF4E9EFF),
-      const Color(0xFFFF6B9D),
-      const Color(0xFF4ECFB5),
-      const Color(0xFFFF9F4E),
-      const Color(0xFF9F4EFF),
+      const Color(0xFF6B4EFF), const Color(0xFF4E9EFF),
+      const Color(0xFFFF6B9D), const Color(0xFF4ECFB5),
+      const Color(0xFFFF9F4E), const Color(0xFF9F4EFF),
     ];
     return colors[title.length % colors.length];
   }
@@ -300,29 +257,16 @@ class _PlaceholderCover extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _colorFromTitle(title);
     return Container(
-      width: double.infinity,
-      height: double.infinity,
+      width: double.infinity, height: double.infinity,
       color: color.withOpacity(0.12),
       child: Stack(
         children: [
-          Center(
-            child: Icon(Icons.book, size: 56, color: color.withOpacity(0.35)),
-          ),
+          Center(child: Icon(Icons.book, size: 56, color: color.withOpacity(0.35))),
           Positioned(
-            bottom: 12,
-            left: 8,
-            right: 8,
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
-            ),
+            bottom: 12, left: 8, right: 8,
+            child: Text(title, textAlign: TextAlign.center, maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: color)),
           ),
         ],
       ),

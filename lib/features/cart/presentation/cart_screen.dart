@@ -13,12 +13,12 @@ class CartScreen extends ConsumerWidget {
     final total = ref.watch(cartTotalProvider);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surfaceContainerLowest,
+      backgroundColor: const Color(0xFFF8F5FF),
       appBar: AppBar(
         backgroundColor: const Color(0xFF6B4EFF),
-        title: Text('My Cart', style: TextStyle(color: Theme.of(context).colorScheme.surfaceContainerLowest, fontWeight: FontWeight.bold)),
+        title: const Text('My Cart', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.surfaceContainerLowest,),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => context.go('/'),
         ),
       ),
@@ -45,7 +45,7 @@ class CartScreen extends ConsumerWidget {
                         margin: const EdgeInsets.only(bottom: 12),
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surfaceContainerLowest,
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 8)],
                         ),
@@ -105,7 +105,7 @@ class CartScreen extends ConsumerWidget {
                 Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surfaceContainerLowest,
+                    color: Colors.white,
                     boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 12, offset: const Offset(0, -4))],
                   ),
                   child: Column(
